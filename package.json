@@ -1,6 +1,6 @@
 {
   "name": "react-render-markup",
-  "version": "3.6.3",
+  "version": "0.0.1",
   "description": "Safely parse HTML, SVG and MathML into React elements.",
   "type": "module",
   "files": [
@@ -64,6 +64,6 @@
     "vitest": "^1.3.1"
   },
   "peerDependencies": {
-    "react": "^16.6.0 || 17 || 18"
+    "react": "^16.6.0 || 17 || 18 || 19"
   }
 }
