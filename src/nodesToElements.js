@@ -4,7 +4,18 @@ import attrsToProps from './attrsToProps';
 import getDisplayName from './getDisplayName';
 import nodeNameToType from './nodeNameToType';
 
+// Never rendered: <script> can run arbitrary code, and <base> can
+// hijack every relative URL/resource on the page from wherever it
+// appears in the document, not just inside <head>.
+const NEVER_RENDER = new Set(['base', 'script']);
+
 const nodesToElements = (nodeList, options) => {
+  // Normalize an array `allowed` option to a Set once—options is the
+  // same object shared across this recursive walk—instead of doing an
+  // O(n) `.includes()` scan for every element at every depth.
+  if (Array.isArray(options.allowed)) {
+    options.allowed = new Set(options.allowed);
+  }
   const tree = [];
   for (let i = 0; i < nodeList.length; i++) {
     const node = nodeList[i];
@@ -12,13 +23,13 @@ const nodesToElements = (nodeList, options) => {
     if (node.nodeType === ELEMENT_NODE) {
       let type = nodeNameToType(node.nodeName);
       if (
-        // Never render <script> elements.
-        type === 'script' ||
+        // Never render <script> or <base> elements.
+        NEVER_RENDER.has(type) ||
         // Handle allowed option to only render elements that are allowed.
         (options.allowed &&
           (typeof options.allowed === 'function'
             ? !options.allowed(node)
-            : !options.allowed.includes(type)))
+            : !options.allowed.has(type)))
       ) {
         continue;
       }

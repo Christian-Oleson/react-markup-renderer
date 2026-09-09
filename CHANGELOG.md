@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.0.6 - 2026-09-09
+
+### Security
+
+- Stripped the `srcdoc` attribute from output. It runs with the parent document’s origin and bypassed the `<script>` element/event attribute restrictions.
+- `<base>` elements are never rendered—like `<script>`, they’re dangerous by default since they can rewrite every relative URL/resource on the page from anywhere in the document.
+- Stripped `javascript:`/`vbscript:` URIs (including obfuscated forms like `java\tscript:`) from `href`, `src`, `action`, `formaction`, `xlink:href`, `poster` and `cite`.
+
+### Fixed
+
+- Fixed `attrsToProps` coercing any empty-string attribute to `true`, rather than just real HTML boolean attributes. This broke the common accessibility pattern `alt=""` for decorative images (previously rendered as `alt="true"`), and similarly affected `title=""`, `class=""`, etc.
+- Fixed stale `react-render-markup` references left over from the package rename: `benchmark/index.js`’s dist import, and every mention/import/badge in `README.md`.
+- Fixed `npm run benchmark`, which was also broken by the tinybench v6 upgrade (`Bench#warmup()` was removed—`Bench#run()` now warms up each task automatically).
+
+### Changed
+
+- `nodesToElements` now normalizes an array `allowed` option to a `Set` once instead of doing an `O(n)` `.includes()` scan per element at every depth.
+
 ## v0.0.5 - 2026-09-09
 
 ### Changed
