@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.js'),
+      entry: resolve(import.meta.dirname, 'src/index.js'),
       formats: ['cjs', 'es'],
     },
     rollupOptions: {
@@ -17,5 +17,8 @@ export default defineConfig({
       ],
     },
     sourcemap: true,
+  },
+  test: {
+    setupFiles: ['./vitest.setup.js'],
   },
 });
