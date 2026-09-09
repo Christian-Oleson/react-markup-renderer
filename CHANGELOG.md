@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.0.2 - 2026-09-09
+
+### Changed
+
+- Upgraded all dependencies to their latest compatible versions, including React and React Test Renderer to v19.2.8, Vite to v8, and Vitest to v5.
+- Migrated ESLint configuration from `.eslintrc.json` to flat config (`eslint.config.js`).
+- Replaced the unmaintained `eslint-plugin-vitest` with the official `@vitest/eslint-plugin`.
+- Kept ESLint on the latest 9.x release rather than 10.x, since `eslint-plugin-react` does not yet declare support for ESLint 10's peer range.
+
+### Fixed
+
+- Wrapped `TestRenderer.create()` calls in `act()` and enabled `IS_REACT_ACT_ENVIRONMENT` in tests, fixing snapshot tests that silently rendered `null` under current React/React Test Renderer versions.
+
 ## v3.6.3 - 2024-03-05
 
 ### Changed
