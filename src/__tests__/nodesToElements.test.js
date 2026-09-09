@@ -59,6 +59,18 @@ describe('doesn’t render unwanted nodes', () => {
     ];
     expect(nodesToElements(nodeList, {})).toBeNull();
   });
+
+  test('base elements', () => {
+    const nodeList = [
+      {
+        attributes: [{ name: 'href', value: 'https://evil.example/' }],
+        childNodes: [],
+        nodeName: 'BASE',
+        nodeType: 1,
+      },
+    ];
+    expect(nodesToElements(nodeList, {})).toBeNull();
+  });
 });
 
 describe('handles `allowed` property on `options`', () => {

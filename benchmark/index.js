@@ -1,6 +1,6 @@
 import { createElement, Fragment } from 'react';
 import { Bench } from 'tinybench';
-import { renderMarkup } from '../dist/react-render-markup.js';
+import { renderMarkup } from '../dist/react-markup-renderer.js';
 
 const bench = new Bench();
 
@@ -59,7 +59,6 @@ bench
     renderMarkup(markup, { trim: true });
   });
 
-await bench.warmup();
 await bench.run();
 
 console.table(bench.table());

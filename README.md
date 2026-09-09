@@ -1,8 +1,8 @@
-# react-render-markup
+# react-markup-renderer
 
 Safely parse HTML, SVG and MathML into React elements.
 
-- :gift: Lightweight ![npm bundle size](https://badgen.net/bundlephobia/minzip/react-render-markup)
+- :gift: Lightweight ![npm bundle size](https://badgen.net/bundlephobia/minzip/react-markup-renderer)
 - :smile: Easy to use with simple API
 - :printer: Server-side rendering out of the box
 
@@ -11,7 +11,7 @@ Safely parse HTML, SVG and MathML into React elements.
 ### `Markup` component
 
 ```js
-import { Markup } from 'react-render-markup';
+import { Markup } from 'react-markup-renderer';
 
 <Markup [...props] />
 ```
@@ -32,7 +32,7 @@ import { Markup } from 'react-render-markup';
 ### `renderMarkup` function
 
 ```js
-import { renderMarkup } from 'react-render-markup';
+import { renderMarkup } from 'react-markup-renderer';
 
 renderMarkup(markup[, options])
 ```
@@ -156,6 +156,11 @@ const MyComponent = (props) => {
 
 ## Cross Site Scripting (XSS)
 
-By default, `<script>` tags and event attributes (i.e. `onClick`) are disallowed and stripped from output.
+By default, the following are disallowed and stripped from output:
 
-If you’re parsing user inputed markup, you’ll want to use some sort of [HTML sanitizer](https://www.npmjs.com/search?q=html%20sanitizer&page=1&ranking=optimal) first.
+- `<script>` and `<base>` elements
+- event attributes (i.e. `onClick`)
+- `javascript:`/`vbscript:` URIs in `href`, `src`, `action`, `formaction`, `xlink:href`, `poster` and `cite`
+- the `srcdoc` attribute on `<iframe>` elements
+
+This is not a full HTML sanitizer. If you’re parsing user inputed markup, you’ll want to use some sort of [HTML sanitizer](https://www.npmjs.com/search?q=html%20sanitizer&page=1&ranking=optimal) first.
